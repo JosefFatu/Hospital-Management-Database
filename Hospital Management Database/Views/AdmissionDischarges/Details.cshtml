@@ -1,0 +1,42 @@
+﻿@model Hospital_Management_Database.Models.AdmissionDischarge
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>AdmissionDischarge</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.wardnumber)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.wardnumber)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.bednumber)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.bednumber)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.dateadmitted)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.dateadmitted)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.datedischarged)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.datedischarged)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.AdmissionDischargeId">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

@@ -1,0 +1,53 @@
+﻿@model IEnumerable<Hospital_Management_Database.Models.AdmissionDischarge>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.wardnumber)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.bednumber)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.dateadmitted)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.datedischarged)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.wardnumber)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.bednumber)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.dateadmitted)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.datedischarged)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.AdmissionDischargeId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.AdmissionDischargeId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.AdmissionDischargeId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
