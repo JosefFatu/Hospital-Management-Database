@@ -8,8 +8,8 @@ namespace Hospital_Management_Database.Models
     public class Patient
     {
         public int Patientid { get; set; }
-        [Display(Name ="First Name")]
-
+        [Display(Name ="First Name"), Required, MaxLength(50)]
+        [StringLength(30, MinimumLength = 3)]
         public string PatientFirstname { get; set; }
         [Display(Name = "Last Name"), Required, MaxLength(50)]
         [StringLength(30, MinimumLength = 3)]
