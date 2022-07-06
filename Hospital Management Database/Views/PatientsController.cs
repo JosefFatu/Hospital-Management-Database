@@ -20,9 +20,47 @@ namespace Hospital_Management_Database.Views
         }
 
         // GET: Patients
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(
+            string sortOrder,
+            string currentFilter,
+            string searchString,
+            int? pageNumber)
         {
-            return View(await _context.Patient.ToListAsync());
+            ViewData["CurrentSort"] = sortOrder;
+            ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            ViewData["DateSortParm"] = sortOrder == "Date" ? "date_desc" : "Date";
+            if (searchString != null)
+            {
+                pageNumber = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+            ViewData["CurrentFilter"] = searchString;
+            var patients = from s in _context.Patient
+                           select s;
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                patients = patients.Where(s => s.PatientLastName.Contains(searchString)     
+                                       || s.PatientFirstname.Contains(searchString));
+            }
+            switch (sortOrder)
+            {
+                case "name_desc":
+                    patients = patients.OrderByDescending(s => s.PatientLastName);
+                    break;
+                case "Date":
+                    patients = patients.OrderBy(s => s.PatientFirstname);
+                    break;
+                case "date_desc":
+                    patients = patients.OrderByDescending(s => s.PatientFirstname);
+                    break;
+                default:
+                    patients = patients.OrderBy(s => s.PatientLastName);
+                    break;
+            }
+            return View(await patients.AsNoTracking().ToListAsync());
         }
 
         // GET: Patients/Details/5

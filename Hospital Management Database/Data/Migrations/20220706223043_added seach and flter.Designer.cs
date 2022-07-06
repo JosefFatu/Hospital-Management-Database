@@ -4,14 +4,16 @@ using Hospital_Management_Database.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Hospital_Management_Database.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220706223043_added seach and flter")]
+    partial class addedseachandflter
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -30,15 +32,21 @@ namespace Hospital_Management_Database.Data.Migrations
                         .HasColumnType("int");
 
                     b.Property<int>("bednumber")
+                        .HasMaxLength(30)
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("dateadmitted")
-                        .HasColumnType("datetime2");
+                    b.Property<string>("dateadmitted")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
 
-                    b.Property<DateTime>("datedischarged")
-                        .HasColumnType("datetime2");
+                    b.Property<string>("datedischarged")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
 
                     b.Property<int>("wardnumber")
+                        .HasMaxLength(30)
                         .HasColumnType("int");
 
                     b.HasKey("AdmissionDischargeId");
