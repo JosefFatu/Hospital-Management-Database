@@ -20,9 +20,47 @@ namespace Hospital_Management_Database.Views
         }
 
         // GET: Staffs
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(
+            string sortOrder,
+            string currentFilter,
+            string searchString,
+            int? pageNumber)
         {
-            return View(await _context.Staff.ToListAsync());
+            ViewData["CurrentSort"] = sortOrder;
+            ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            ViewData["DateSortParm"] = sortOrder == "Date" ? "date_desc" : "Date";
+            if (searchString != null)
+            {
+                pageNumber = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+            ViewData["CurrentFilter"] = searchString;
+            var staffs = from s in _context.Staff
+                           select s;
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                staffs = staffs.Where(s => s.StaffLastName.Contains(searchString)
+                                       || s.StaffFirstName.Contains(searchString));
+            }
+            switch (sortOrder)
+            {
+                case "name_desc":
+                    staffs = staffs.OrderByDescending(s => s.StaffLastName);
+                    break;
+                case "Date":
+                    staffs = staffs.OrderBy(s => s.StaffFirstName);
+                    break;
+                case "date_desc":
+                    staffs = staffs.OrderByDescending(s => s.StaffLastName);
+                    break;
+                default:
+                    staffs = staffs.OrderBy(s => s.StaffLastName);
+                    break;
+            }
+            return View(await staffs.AsNoTracking().ToListAsync());
         }
 
         // GET: Staffs/Details/5
